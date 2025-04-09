@@ -44,12 +44,34 @@ router.addRoute("/about", () => render("<h1>About</h1><p>This is the about page.
     history.back();
   });
 }); */
+
+async function getPokemon() 
+{
+    const content =document.getElementById('content');
+    console.log("==============FETCH==================="); 
+    try 
+    {
+        const response = await fetch(`http://localhost:3001` );
+
+        if(!response.ok)
+            throw new Error(`failed to get Pokemon: ${response.statusText}`);
+        const data = await response.json();
+        console.log(data); 
+   
+
+    }
+    catch(error)
+    {
+        
+
+    }
+}
 document.addEventListener("DOMContentLoaded", () => {
     const appContainer = document.getElementById("app");
-  
-    if (appContainer) {
+    getPokemon();
+     if (appContainer) {
       // Clear the div and add the Babylon.js canvas
       appContainer.innerHTML = "";
       new CanvasComponent("app");
-    }
+    } 
   });

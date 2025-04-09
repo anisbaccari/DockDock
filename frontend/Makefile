@@ -1,4 +1,4 @@
-SRC=frontendv4
+SRC=frontend
 OUT_SRC=frontend-dev
 DIR=$(CURDIR)
 
@@ -24,7 +24,7 @@ status:
 	@echo ""
 
 # remove all containers, images, volumes and networks to start with a clean state
-prepare:
+fclean:
 	@echo "\nPreparing to start with a clean state..."
 	@echo "\nCONTAINERS STOPPED\n"
 	@if [ -n "$$(docker ps -qa)" ]; then docker stop $$(docker ps -qa) ;	fi
@@ -66,10 +66,15 @@ info:
 	@echo " docker system prune  # Remove unused data\n"
 	@echo " \n"
 	
+
+network :
+	docker network create frontend-network
+
 run : 
 	docker run -t -d \
   	-p 8080:8080 \
   	-v $(DIR):/app \
+	--network frontend-network \
   	--name $(OUT_SRC) \
     $(SRC)
 
@@ -79,4 +84,12 @@ logs:
 	docker logs -f $(OUT_SRC)
 	
 
-re : clean all
+re : fclean network exec 
+
+
+inspect-network :
+	@echo "\nNetwork Connections:"
+	@docker network inspect frontend-network
+	@echo "\nContainer IPs:"
+	@docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(OUT_SRC)
+	
