@@ -6,6 +6,12 @@ import { CanvasComponent } from "./components/CanvasComponent.js";
 // Initialize the router
 const router = new Router();
 
+// Make game function globally available
+declare global {
+  interface Window {
+      game: () => void;
+  }
+}
 // Simple function to render content
 function render(content: string): void {
   const appDiv = document.getElementById("app");
@@ -14,20 +20,33 @@ function render(content: string): void {
   }
 }
 
+export function game()
+{
+      const appContainer = document.getElementById("app");
+    getPokemon();
+     if (appContainer) {
+      // Clear the div and add the Babylon.js canvas
+      appContainer.innerHTML = "";
+      new CanvasComponent("app");
+    }  
+}
+
+// Assign to window object
+window.game = game;
+
 // Define some routes with corresponding content
 router.addRoute("/", () => render("<h1>Home Page</h1><p>Welcome to the SPA!</p>"));
 router.addRoute("/about", () => render("<h1>About</h1><p>This is the about page.</p>"));
 
 // Simulate navigation buttons
-/* document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   render("<h1>Home Page</h1><p>Welcome to the SPA!</p>");
   
   // Create navigation buttons
   const navDiv = document.createElement("div");
   navDiv.innerHTML = `
-    <button id="homeBtn">Home</button>
-    <button id="aboutBtn">About</button>
-    <button id="backBtn">Back</button>
+  <button onclick="game()">Get stkarted </button>
+
   `;
   document.body.insertBefore(navDiv, document.getElementById("app"));
 
@@ -43,7 +62,7 @@ router.addRoute("/about", () => render("<h1>About</h1><p>This is the about page.
   document.getElementById("backBtn")?.addEventListener("click", () => {
     history.back();
   });
-}); */
+});
 
 async function getPokemon() 
 {
@@ -67,11 +86,25 @@ async function getPokemon()
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    const appContainer = document.getElementById("app");
+  // Add click handler to existing button
+  const startButton = document.querySelector('a[href="#"]');
+  if (startButton) {
+      startButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          game();
+      });
+  }
+});
+
+/*  
+document.addEventListener("DOMContentLoaded", () => {
+     const appContainer = document.getElementById("app");
     getPokemon();
      if (appContainer) {
       // Clear the div and add the Babylon.js canvas
       appContainer.innerHTML = "";
       new CanvasComponent("app");
-    } 
+    }
   });
+  */
+  

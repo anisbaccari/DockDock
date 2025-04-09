@@ -19,35 +19,42 @@ function render(content) {
         appDiv.innerHTML = content;
     }
 }
+export function game() {
+    const appContainer = document.getElementById("app");
+    getPokemon();
+    if (appContainer) {
+        // Clear the div and add the Babylon.js canvas
+        appContainer.innerHTML = "";
+        new CanvasComponent("app");
+    }
+}
+// Assign to window object
+window.game = game;
 // Define some routes with corresponding content
 router.addRoute("/", () => render("<h1>Home Page</h1><p>Welcome to the SPA!</p>"));
 router.addRoute("/about", () => render("<h1>About</h1><p>This is the about page.</p>"));
 // Simulate navigation buttons
-/* document.addEventListener("DOMContentLoaded", () => {
-  render("<h1>Home Page</h1><p>Welcome to the SPA!</p>");
-  
-  // Create navigation buttons
-  const navDiv = document.createElement("div");
-  navDiv.innerHTML = `
-    <button id="homeBtn">Home</button>
-    <button id="aboutBtn">About</button>
-    <button id="backBtn">Back</button>
+document.addEventListener("DOMContentLoaded", () => {
+    var _a, _b, _c;
+    render("<h1>Home Page</h1><p>Welcome to the SPA!</p>");
+    // Create navigation buttons
+    const navDiv = document.createElement("div");
+    navDiv.innerHTML = `
+  <button onclick="game()">Get stkarted </button>
+
   `;
-  document.body.insertBefore(navDiv, document.getElementById("app"));
-
-  document.getElementById("homeBtn")?.addEventListener("click", () => {
-    router.navigate("/");
-  });
-
-  document.getElementById("aboutBtn")?.addEventListener("click", () => {
-    router.navigate("/about");
-  });
-
-  // Using history.back() as a stand-in for a "previous" function
-  document.getElementById("backBtn")?.addEventListener("click", () => {
-    history.back();
-  });
-}); */
+    document.body.insertBefore(navDiv, document.getElementById("app"));
+    (_a = document.getElementById("homeBtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
+        router.navigate("/");
+    });
+    (_b = document.getElementById("aboutBtn")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
+        router.navigate("/about");
+    });
+    // Using history.back() as a stand-in for a "previous" function
+    (_c = document.getElementById("backBtn")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
+        history.back();
+    });
+});
 function getPokemon() {
     return __awaiter(this, void 0, void 0, function* () {
         const content = document.getElementById('content');
@@ -64,11 +71,23 @@ function getPokemon() {
     });
 }
 document.addEventListener("DOMContentLoaded", () => {
-    const appContainer = document.getElementById("app");
-    getPokemon();
-    if (appContainer) {
-        // Clear the div and add the Babylon.js canvas
-        appContainer.innerHTML = "";
-        new CanvasComponent("app");
+    // Add click handler to existing button
+    const startButton = document.querySelector('a[href="#"]');
+    if (startButton) {
+        startButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            game();
+        });
     }
 });
+/*
+document.addEventListener("DOMContentLoaded", () => {
+     const appContainer = document.getElementById("app");
+    getPokemon();
+     if (appContainer) {
+      // Clear the div and add the Babylon.js canvas
+      appContainer.innerHTML = "";
+      new CanvasComponent("app");
+    }
+  });
+  */
