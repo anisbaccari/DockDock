@@ -1,7 +1,9 @@
 FROM alpine:3.19
 
 # Install packages
+#to prevent content to fail loading ->  ca-certificates 
 RUN apk update && apk add --no-cache \
+    ca-certificates  \ 
     bash \
     curl \
     vim \
@@ -12,21 +14,18 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install 
+RUN npm install -g concurrently
 
 COPY . .
 
-# Compile TypeScript during the build
-#RUN npx tsc --watch & 
-# Copy the script into the container
-# COPY start.sh /usr/local/bin/start.sh
+
 
 # Make sure it’s executable
- RUN chmod +x start.sh
+RUN chmod +x start.sh
 EXPOSE 8080
 
 #CMD ["pwd"]
 #RUN ls
 # Set the entrypoint to your script
 ENTRYPOINT ["./start.sh"]
-CMD ["npx", "live-server", "--port=8080", "--entry-file=index.html"]
+CMD ["concurrently", "npx tsc --watch", "npx live-server --port=8080 --watch=./*.html,dist/* --entry-file=index.html"]
