@@ -90,32 +90,3 @@ class Pong {
     }
 }
 export { Pong };
-/*
-
-
-
-      
-      if (isColliding && !this.collisionState) {
-          // Collision just started
-         // console.log(" Paddle Colliding");
-          this.collisionState = true;
-          ballDirection.x *=-1;
-       
-      }
-      if (ballGroundCollision_x && !this.collisionState) {
-              // Collision just started
-      //        console.log("ballGroundCollision_x");
-              this.collisionState = true;
-              ballDirection.x *=-1;
-           
-
-      } if (ballGroundCollision_z && !this.collisionState) {
-          // Collision just started
-          console.log("ballGroundCollision_z");
-          this.collisionState = true;
-          ballDirection.z *=-1;
-     
-      } else if (!isColliding) {
-          // No collision, reset state
-          this.collisionState = false;
-      } */ 

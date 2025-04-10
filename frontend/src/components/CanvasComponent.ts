@@ -18,9 +18,12 @@ export class CanvasComponent {
     
     this.isRendering=true;
     this.canvas = document.createElement("canvas");
-    this.canvas.style.width = "100vw";
-    this.canvas.style.height = "100%";
+    this.canvas.style.width = "50vw";
+    this.canvas.style.height = "50vh";
+    this.canvas.className = "absolute inset-0 w-full h-full";
+   
     // Add the object to the page 
+    console.log(document.getElementById(containerId));
     document.getElementById(containerId)?.appendChild(this.canvas);
 
     this.engine = new BABYLON.Engine(this.canvas, true);

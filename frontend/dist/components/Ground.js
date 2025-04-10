@@ -1,3 +1,4 @@
+const IMG_PATH = './dist/img';
 export class Ground {
     constructor(scene) {
         this.scene = scene;
@@ -21,15 +22,15 @@ export class Ground {
         const uvScale = 4;
         const texArray = [];
         // Load Textures
-        const diffuseTex = new BABYLON.Texture("./img/grass/01_grass_diffuse.jpg", this.scene);
+        const diffuseTex = new BABYLON.Texture(`${IMG_PATH}/grass/01_grass_diffuse.jpg`, this.scene);
         this.material.diffuseTexture = diffuseTex;
         texArray.push(diffuseTex);
-        const normalTex = new BABYLON.Texture("./img/grass/01_grass_normal.jpg", this.scene);
+        const normalTex = new BABYLON.Texture(`${IMG_PATH}/grass/01_grass_normal.jpg`, this.scene);
         this.material.bumpTexture = normalTex;
         this.material.invertNormalMapX = true;
         this.material.invertNormalMapY = true;
         texArray.push(normalTex);
-        const aoTex = new BABYLON.Texture("./img/grass/01_grass_ao.jpg", this.scene);
+        const aoTex = new BABYLON.Texture(`${IMG_PATH}/grass/01_grass_ao.jpg`, this.scene);
         this.material.ambientTexture = aoTex;
         texArray.push(aoTex);
         // Adjust texture tiling
@@ -49,7 +50,7 @@ export class Ground {
         // Create a Standard Material for the cylinder
         const cylinderMaterial = new BABYLON.StandardMaterial("cylinderMaterial", this.scene);
         // Apply a texture to the cylinder
-        const texture = new BABYLON.Texture("./img/asset/01_asset_diffuse.jpg", this.scene);
+        const texture = new BABYLON.Texture(`${IMG_PATH}/asset/01_asset_diffuse.jpg`, this.scene);
         cylinderMaterial.diffuseTexture = texture;
         // Apply the material to the cylinder
         cylinder.material = cylinderMaterial;

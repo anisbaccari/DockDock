@@ -2,8 +2,8 @@ SRC=frontend
 OUT_SRC=frontend-dev
 DIR=$(CURDIR)
 
-all : 
-	@docker build -t $(SRC) .
+all :
+	@docker-compose up --build
 
 clean:
 	@docker stop $$(docker ps -qa);\
@@ -68,7 +68,7 @@ info:
 	
 
 network :
-	docker network create frontend-network
+	docker network create transcendance
 
 run : 
 	docker run -t -d \

@@ -1,6 +1,7 @@
 SRC=frontend
 OUT_SRC=frontend-dev
 DIR=$(CURDIR)
+NETWORK=transcendance
 
 all : 
 	@docker build -t $(SRC) .
@@ -68,13 +69,13 @@ info:
 	
 
 network :
-	docker network create frontend-network
+	docker network create $(NETWORK)
 
 run : 
 	docker run -t -d \
   	-p 8080:8080 \
   	-v $(DIR):/app \
-	--network frontend-network \
+	--network $(NETWORK) \
   	--name $(OUT_SRC) \
     $(SRC)
 
@@ -89,7 +90,7 @@ re : fclean network exec
 
 inspect-network :
 	@echo "\nNetwork Connections:"
-	@docker network inspect frontend-network
+	@docker network inspect $(NETWORK)
 	@echo "\nContainer IPs:"
 	@docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(OUT_SRC)
 	

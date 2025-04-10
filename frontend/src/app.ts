@@ -23,10 +23,11 @@ function render(content: string): void {
 export function game()
 {
       const appContainer = document.getElementById("app");
-    getPokemon();
+    getData();
      if (appContainer) {
       // Clear the div and add the Babylon.js canvas
       appContainer.innerHTML = "";
+      appContainer.className = "relative w-full h-full flex justify-center items-center";
       new CanvasComponent("app");
     }  
 }
@@ -35,12 +36,12 @@ export function game()
 window.game = game;
 
 // Define some routes with corresponding content
-router.addRoute("/", () => render("<h1>Home Page</h1><p>Welcome to the SPA!</p>"));
+router.addRoute("/", () => render("<h1>Home Page</h1>"));
 router.addRoute("/about", () => render("<h1>About</h1><p>This is the about page.</p>"));
 
 // Simulate navigation buttons
 document.addEventListener("DOMContentLoaded", () => {
-  render("<h1>Home Page</h1><p>Welcome to the SPA!</p>");
+  render("<h1>Home Page</h1>");
   
   // Create navigation buttons
   const navDiv = document.createElement("div");
@@ -64,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-async function getPokemon() 
+async function getData() 
 {
     const content =document.getElementById('content');
     console.log("==============FETCH==================="); 
@@ -73,7 +74,7 @@ async function getPokemon()
         const response = await fetch(`http://localhost:3001` );
 
         if(!response.ok)
-            throw new Error(`failed to get Pokemon: ${response.statusText}`);
+            throw new Error(`failed to get Data: ${response.statusText}`);
         const data = await response.json();
         console.log(data); 
    

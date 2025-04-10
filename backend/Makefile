@@ -1,6 +1,7 @@
 SRC=backend
 OUT_SRC=backend-dev
 DIR=$(CURDIR)
+NETWORK=transcendance
 
 all : 
 	@docker build -t $(SRC) .
@@ -68,14 +69,14 @@ info:
 	
 
 connect :
-	docker network connect frontend-network $(OUT_SRC) || true
+	docker network connect $(NETWORK) $(OUT_SRC) || true
 
 run : 
 	docker run -t -d \
   	-p 3001:3001 \
   	-v $(DIR):/app \
 	-w /app 	\
-	--network frontend-network \
+	--network $(NETWORK) \
   	--name $(OUT_SRC) \
     $(SRC)
 
